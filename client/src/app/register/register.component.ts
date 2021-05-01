@@ -15,16 +15,16 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  register(){
-    this.accountService.register(this.model).subscribe(response =>{
+  register() {
+    this.accountService.register(this.model).subscribe(response => {
       console.log(response);
       this.cancel();
-    }, error =>{
+    }, error => {
       console.log(error);
     })
   }
 
-  cancel(){
+  cancel() {
     this.cancelRegister.emit(false);
   }
 }
