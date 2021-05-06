@@ -13,14 +13,12 @@ namespace API.Controllers
     {
         #region Variables
         private readonly IUserRepository _userRepository;
-        private readonly IMapper _mapper;
         #endregion
 
         #region CTOR
         public UsersController(IUserRepository userRepository, IMapper mapper)
         {
             _userRepository = userRepository;
-            _mapper = mapper;
         }
         #endregion
 
