@@ -29,18 +29,20 @@ export class MemberDetailComponent implements OnInit {
         preview: false
       }
     ]
+
+    this.galleryImages = this.getImages();
   }
 
   getImages(): NgxGalleryImage[] {
     const imageUrls = [];
     for (const photo of this.member.photos) {
       imageUrls.push({
-        small: photo.url,
-        medium: photo.url,
-        big: photo.url
+        small: photo?.url,
+        medium: photo?.url,
+        big: photo?.url
       })
-      return imageUrls;
     }
+    return imageUrls;
   }
 
   loadMember() {
