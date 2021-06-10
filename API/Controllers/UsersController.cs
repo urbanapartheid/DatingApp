@@ -86,6 +86,7 @@ namespace API.Controllers
 
             if (await _userRepository.SaveAllAsync())
             {
+                // return _mapper.Map<PhotoDto>(photo);
                 return CreatedAtRoute("GetUser", new { username = user.UserName} , _mapper.Map<PhotoDto>(photo));
             }
 
@@ -123,14 +124,10 @@ namespace API.Controllers
             var photo = user.Photos.FirstOrDefault(x => x.Id == photoId);
 
             if (photo == null)
-            {
                 return NotFound();
-            }
 
             if (photo.IsMain)
-            {
                 return BadRequest("You can't delete your main photo");
-            }
 
             if (photo.PublicId != null)
             {
