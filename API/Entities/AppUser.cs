@@ -36,6 +36,16 @@ namespace API.Entities
         public string Country { get; set; }
 
         public ICollection<Photo> Photos { get; set; }
+
+        /// <summary>
+        /// Collection of users who like currently logged in user
+        /// </summary>
+        public ICollection<UserLike> LikedByUsers { get; set; }
+
+        /// <summary>
+        /// Collection of users who the currently logged in user likes
+        /// </summary>
+        public ICollection<UserLike> LikedUsers { get; set; }
         #endregion
     }
 }
