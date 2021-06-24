@@ -1,5 +1,6 @@
 ﻿namespace API.Helper
 {
+    // Send back to client (Angular)
     public class PaginationHeader
     {
         #region Properties

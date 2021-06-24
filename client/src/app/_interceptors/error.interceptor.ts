@@ -19,7 +19,8 @@ export class ErrorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError(error => {
         if (error) {
-          switch (error.status) {
+          switch (error.status) 
+          {
             case 400:
               if (error.error.errors) {
                 const modalStateErrors = [];
@@ -29,14 +30,19 @@ export class ErrorInterceptor implements HttpInterceptor {
                   }
                 }
                 throw modalStateErrors.flat();
-              } else {
-                //this.toastr.error(error.statusText, error.status);
-                this.toastr.error(error.statusText === "OK" ? "Bad Request" : error.statusText, error.status);
               }
+               // ATTN: need to differenciate generic error from object error.
+               // checking object type here to emit error message 
+              else if (typeof(error.error) === 'object') {
+                this.toastr.error(error.statusText, error.status);
+              }
+              else {
+                this.toastr.error(error.error, error.status); 
+              }
+              
               break;
-
+            
             case 401:
-              //this.toastr.error(error.statusText, error.status);
               this.toastr.error(error.statusText === "OK" ? "Unauthorized" : error.statusText, error.status);
               break;
 

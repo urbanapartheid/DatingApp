@@ -11,12 +11,14 @@ namespace API.Extensions
         {
             var paginationHeader = new PaginationHeader(currentPage, itemsPerPage, totalItems, totalPages);
 
+            // use System.Text.Json not Newton
+            // option for propery naming policy -> camel case
             var options = new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             };
 
-            response.Headers.Add("Pagination", JsonSerializer.Serialize(paginationHeader, options));
+            response.Headers.Add("Pagination", JsonSerializer.Serialize(paginationHeader, options)); // option added
             response.Headers.Add("Access-Control-Expose-Headers", "Pagination");
         }
     }

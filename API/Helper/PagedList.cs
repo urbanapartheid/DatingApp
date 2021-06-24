@@ -8,6 +8,16 @@ namespace API.Helper
 {
     public class PagedList<T> : List<T>
     {
+        #region Properties
+        public int CurrentPage { get; set; }
+
+        public int TotalPages { get; set; }
+
+        public int PageSize { get; set; }
+
+        public int TotalCount { get; set; }
+        #endregion
+
         #region CTOR
         public PagedList(IEnumerable<T> items, int count, int pageNumber, int pageSize)
         {
@@ -17,16 +27,6 @@ namespace API.Helper
             TotalCount = count;
             AddRange(items);
         }
-        #endregion
-
-        #region Properties
-        public int CurrentPage { get; set; }
-
-        public int TotalPages { get; set; }
-
-        public int PageSize { get; set; }
-
-        public int TotalCount { get; set; }
         #endregion
 
         #region Methods
