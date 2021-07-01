@@ -17,6 +17,7 @@ namespace API.Extensions
             services.AddScoped<ITokenService, TokenService>(); // life time for a service
             services.AddScoped<IPhotoService, PhotoService>();
             services.AddScoped<ILikesRepository, LikesRepository>();
+            services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddScoped<LogUserActivity>(); // for activity recording (last activity)
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
