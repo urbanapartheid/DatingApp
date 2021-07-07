@@ -1,11 +1,12 @@
 ﻿using API.Entities;
+using System.Threading.Tasks;
 
 namespace API.Interfaces
 {
     public interface ITokenService
     {
         #region Methods
-        string CreateToken(AppUser user); 
+        Task<string> CreateToken(AppUser user); 
         #endregion
     }
 }
