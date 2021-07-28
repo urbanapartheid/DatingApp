@@ -14,6 +14,10 @@ namespace API.Data
         public DbSet<UserLike> Likes { get; set; }
 
         public DbSet<Message> Messages { get; set; }
+
+        public DbSet<Group> Groups { get; set; }
+
+        public DbSet<Connection> Connections { get; set; }
         #endregion
 
         #region CTOR
@@ -27,6 +31,11 @@ namespace API.Data
         {
             base.OnModelCreating(builder);
 
+            builder.Entity<Group>()
+                .HasMany(x => x.Connections)
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
+
             builder.Entity<AppUser>()
                 .HasMany(ur => ur.UserRoles)
                 .WithOne(u => u.User)
@@ -34,30 +43,26 @@ namespace API.Data
                 .IsRequired();
 
             builder.Entity<AppRole>()
-               .HasMany(ur => ur.UserRoles)
-               .WithOne(u => u.Role)
-               .HasForeignKey(ur => ur.RoleId)
-               .IsRequired();
+                .HasMany(ur => ur.UserRoles)
+                .WithOne(u => u.Role)
+                .HasForeignKey(ur => ur.RoleId)
+                .IsRequired();
+
 
             builder.Entity<UserLike>()
-                .HasKey(k => new { k.SourceUserId, k.LikedUserId }); // create PK
+                .HasKey(k => new { k.SourceUserId, k.LikedUserId });
 
-            // Source user has many liked users
-            // HasForeignKey => define FK
-            // DeleteBehavio.NoAction => delete user -> delete related entity too.
             builder.Entity<UserLike>()
                 .HasOne(s => s.SourceUser)
                 .WithMany(l => l.LikedUsers)
                 .HasForeignKey(s => s.SourceUserId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
 
-            // LikedUser: Collection of users who the currently logged in user likes
-            // LikedByUser: Collection of users who like currently logged in user
             builder.Entity<UserLike>()
-               .HasOne(s => s.LikedUser)
-               .WithMany(l => l.LikedByUsers)
-               .HasForeignKey(s => s.LikedUserId)
-               .OnDelete(DeleteBehavior.NoAction);
+                .HasOne(s => s.LikedUser)
+                .WithMany(l => l.LikedByUsers)
+                .HasForeignKey(s => s.LikedUserId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Message>()
                 .HasOne(u => u.Recipient)
@@ -65,9 +70,9 @@ namespace API.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<Message>()
-               .HasOne(u => u.Sender)
-               .WithMany(m => m.MessagesSent)
-               .OnDelete(DeleteBehavior.Restrict);
+                .HasOne(u => u.Sender)
+                .WithMany(m => m.MessagesSent)
+                .OnDelete(DeleteBehavior.Restrict);
         }
         #endregion
     }
