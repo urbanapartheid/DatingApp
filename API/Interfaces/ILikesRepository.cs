@@ -1,7 +1,6 @@
 ﻿using API.DTOs;
 using API.Entities;
 using API.Helper;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace API.Interfaces
